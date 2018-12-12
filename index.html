@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>jQuery Show More & Less</title>
+
+    <style>
+        .morecontent span {
+            display: none;
+        }
+    </style>
+
+</head>
+<body>
+
+    <div class="paragraphs">
+        <p class="more">Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
+        <p class="more">Aenean facilisis metus non libero pharetra, ultricies rhoncus sapien tempor. Nullam a enim non augue mattis malesuada. Sed lectus dolor, eleifend eleifend semper vitae, viverra non risus.</p>
+        <p class="more">Sed magna enim, pharetra eleifend semper sit amet, convallis at quam.</p>
+        <p class="more">Praesent et ante non ipsum pulvinar volutpat quis a justo. Aenean massa orci, efficitur tincidunt molestie id, mollis sed urna. Sed arcu augue, fermentum at scelerisque sit amet, feugiat in felis.</p>
+    </div>
+
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+
+    <script>
+
+        $(function () {
+
+            var showChar = 120,
+                ellipsestext = "...",
+                moretext = "Read more",
+                lesstext = "Read less";
+
+            $('.more').each(function() {
+                var content = $(this).html();
+                if(content.length > showChar) {
+                    var c = content.substr(0, showChar);
+                    var h = content.substr(showChar, content.length - showChar);
+                    var html = c + '<span class="moreellipses">' + ellipsestext+ '&nbsp;</span><span class="morecontent"><span>' + h + '</span>&nbsp;&nbsp;<a href="javascript:void(0);" class="morelink">' + moretext + '</a></span>';
+                    $(this).html(html);
+                }
+            });
+
+            $(document).on('click', '.morelink', function () {
+                if($(this).hasClass("less")) {
+                    $(this).removeClass("less");
+                    $(this).html(moretext);
+                } else {
+                    $(this).addClass("less");
+                    $(this).html(lesstext);
+                }
+                $(this).parent().prev().toggle();
+                $(this).prev().toggle();
+            });
+
+        });
+
+    </script>
+
+</body>
+</html>
